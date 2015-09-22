@@ -20,9 +20,8 @@ class UserController extends Controller
         $data = User::where("status",1)
             ->get()
             ->toArray();
+        return view("admin.user",["result"=>$data]);
 
-        return $this->view("admin.user",$data);
-        //
     }
 
     /**

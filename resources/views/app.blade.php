@@ -54,7 +54,13 @@
 			</div>
 		</div>
 	</nav>
-
+    @if (!Auth::guest())
+    <div style="float: left; width: 100px; text-align:right;">
+        <div><a href="{{url('/admin/article/list')}}"> 发布 </a></div>
+        <div>111</div>
+        <div>111</div>
+    </div>
+    @endif
 	@yield('content')
 
 	<!-- Scripts -->
