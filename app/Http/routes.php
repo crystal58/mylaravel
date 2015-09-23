@@ -27,7 +27,9 @@ Route::group(['prefix'=>'admin','namespace' => 'Admin','middleware' => 'auth'], 
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
 
     Route::get('/', 'UserController@index');
-
+    Route::resource('article','ArticlesController');
+//    Route::get('article/show','ArticleController@show');
+//    Route::get('article/add','ArticleController@create');
 //    Route::group(['namespace' => 'User'], function()
 //    {
 //        // Controllers Within The "App\Http\Controllers\Admin\User" Namespace

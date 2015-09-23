@@ -56,15 +56,15 @@
 	</nav>
     @if (!Auth::guest())
     <div style="float: left; width: 100px; text-align:right;">
-        <div><a href="{{url('/admin/article/list')}}"> 发布 </a></div>
-        <div>111</div>
+        <div><a href="{{url('/admin/article/create')}}"> 发布 </a></div>
+        <div><a href="{{url('/admin/article')}}">文章列表</a></div>
         <div>111</div>
     </div>
     @endif
 	@yield('content')
 
 	<!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="{{ asset('/js/jquery.min.js') }}"></script>
+	<script src="{{asset('/js/bootstrap.min.js')}}"></script>
 </body>
 </html>
