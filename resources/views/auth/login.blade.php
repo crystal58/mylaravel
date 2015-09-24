@@ -34,6 +34,13 @@
 								<input type="password" class="form-control" name="password">
 							</div>
 						</div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label"></label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="captcha">
+                                <img src="{{url('/captcha')}}" id="captcha"></a>
+                            </div>
+                        </div>
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
