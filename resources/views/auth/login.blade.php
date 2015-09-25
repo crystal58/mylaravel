@@ -38,7 +38,7 @@
                             <label class="col-md-4 control-label"></label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="captcha">
-                                <img src="{{url('/captcha')}}" id="captcha"></a>
+                                <img src="{{url('/captcha')}}" id="captcha" title="点击刷新"></a>
                             </div>
                         </div>
 
@@ -65,4 +65,11 @@
 		</div>
 	</div>
 </div>
+    <script>
+        $("#captcha").click(function(){
+            this.src = "{{url('/captcha').'?'}}"+ Math.random();
+
+        });
+
+    </script>
 @endsection
