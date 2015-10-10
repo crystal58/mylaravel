@@ -9,14 +9,16 @@ namespace App\Extensions;
 
 use Illuminate\Validation\Validator;
 use Gregwar\Captcha\CaptchaBuilder;
+use Illuminate\Support\Facades\Log;
 
-class MyValidate extends Validator{
+class MyValidator extends Validator{
 
     public function ValidateCaptcha($attribute, $value){
-        $captcha = $request->input("captcha");
-        // $builder = new CaptchaBuilder;
-        // if(!$builder->testPhrase($captcha)) {
-        //用户输入验证码正确
-        // }
+        if(empty($value)){
+            return false;
+        }
+        Log::info('input:'.$value);
+        $builder = new CaptchaBuilder;
+        return $builder->testPhrase($value);
     }
 }

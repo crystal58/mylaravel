@@ -104,5 +104,6 @@ return [
     */
 
     'attributes' => [],
+    'captcha' => 'captcha ...'
 
 ];

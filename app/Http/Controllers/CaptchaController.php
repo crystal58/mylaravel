@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 //引用对应的命名空间
 use Gregwar\Captcha\CaptchaBuilder;
+use Illuminate\Support\Facades\Log;
 use Session;
 
 class CaptchaController extends Controller {
@@ -24,6 +25,7 @@ class CaptchaController extends Controller {
         $builder->build($width = 100, $height = 40, $font = null);
         //获取验证码的内容
         $phrase = $builder->getPhrase();
+        Log::info("create:".$phrase);
 
         //把内容存入session
         Session::flash('milkcaptcha', $phrase);
