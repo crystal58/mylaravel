@@ -10,6 +10,7 @@ namespace App\Extensions;
 use Illuminate\Validation\Validator;
 use Gregwar\Captcha\CaptchaBuilder;
 use Illuminate\Support\Facades\Log;
+use Session;
 
 class MyValidator extends Validator{
 
@@ -18,7 +19,7 @@ class MyValidator extends Validator{
             return false;
         }
         Log::info('input:'.$value);
-        $builder = new CaptchaBuilder;
+        $builder = new CaptchaBuilder(Session::get('milkcaptcha'));
         return $builder->testPhrase($value);
     }
 }
