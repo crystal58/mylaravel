@@ -18,7 +18,6 @@ class MyValidator extends Validator{
         if(empty($value)){
             return false;
         }
-        Log::info('input:'.$value);
         $builder = new CaptchaBuilder(Session::get('milkcaptcha'));
         return $builder->testPhrase($value);
     }
