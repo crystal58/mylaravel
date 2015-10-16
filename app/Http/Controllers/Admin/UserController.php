@@ -15,15 +15,31 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = User::where("status",1)
-            ->get()
-            ->toArray();
+
+        $data = User::all()->toArray();
         return view("admin.user",["result"=>$data]);
 
     }
 
+    public function search(Request $request)
+    {
+        $keyword = $request->keyword;
+        $type = $request->type;
+        //var_dump($request);
+        $user = new User();
+        if($type=="name"){
+            $select = User::where("name","like",$keyword."%");
+        }elseif($type=="email"){
+            $select = User::where("email",$keyword);
+        }else {
+            $select = User::all();
+        }
+        $data = $select->toArray();
+        return view("admin.user",["result"=>$data]);
+
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -31,6 +47,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        echo "create";
         //
     }
 
@@ -42,6 +59,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        echo "store";
         //
     }
 
@@ -53,7 +71,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = new User();
+        $userInfo = $user->getUserById($id)->toArray();
+        echo json_encode($userInfo);
     }
 
     /**
@@ -64,6 +84,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        echo "edit";
         //
     }
 
@@ -76,7 +97,16 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $status = $request->get("status");
+        $user = new User();
+        $userInfo = $user->getUserById($id);
+        $userInfo->status = $status;
+
+        if($userInfo->save()){
+            echo "success";
+        }else{
+            echo "error";
+        }
     }
 
     /**
@@ -89,4 +119,5 @@ class UserController extends Controller
     {
         //
     }
+
 }
