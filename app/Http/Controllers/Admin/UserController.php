@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -30,9 +31,9 @@ class UserController extends Controller
         //var_dump($request);
         $user = new User();
         if($type=="name"){
-            $select = User::where("name","like",$keyword."%");
+            $select = User::where("name","like","%".$keyword."%")->get();
         }elseif($type=="email"){
-            $select = User::where("email",$keyword);
+            $select = User::where("email",$keyword)->get();
         }else {
             $select = User::all();
         }
@@ -84,7 +85,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        echo "edit";
+        $data = Session::all();
+        var_dump($data);
         //
     }
 

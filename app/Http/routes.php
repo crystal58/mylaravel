@@ -20,6 +20,9 @@ Route::controllers([
 ]);
 
 Route::get('/captcha','CaptchaController@captcha');
+
+Route::resource('/upload', 'UploadController');
+//Route::get('/upload','UploadController@upload');
 //Route::get('auth/login', 'Auth\AuthController@getLogin');
 //Route::post('auth/login', 'Auth\AuthController@postLogin');
 //Route::get('auth/logout', 'Auth\AuthController@getLogout');
@@ -32,6 +35,7 @@ Route::group(['prefix'=>'admin','namespace' => 'Admin','middleware' => 'auth'], 
     Route::post('/search', 'UserController@search');
     Route::resource('article','ArticlesController');
     Route::resource('user','UserController');
+
 //    Route::get('article/show','ArticleController@show');
 //    Route::get('article/add','ArticleController@create');
 //    Route::group(['namespace' => 'User'], function()

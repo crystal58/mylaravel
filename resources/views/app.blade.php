@@ -59,7 +59,7 @@
     <div style="float: left; width: 100px; text-align:right;">
         <div><a href="{{url('/admin/article/create')}}"> 发布 </a></div>
         <div><a href="{{url('/admin/article')}}">文章列表</a></div>
-        <div>111</div>
+        <div><a href="{{url('/admin/user/1/edit')}}">session</a></div>
     </div>
     @endif
 	@yield('content')
