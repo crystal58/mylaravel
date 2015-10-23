@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Jqueryfileupload\UploadHandler;
+//use Blueimp\Jqueryfileupload\server\php\UploadHandler;
 
 class UploadController extends Controller
 {
@@ -42,7 +44,7 @@ class UploadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $upload_handler = new UploadHandler();
     }
 
     /**
@@ -64,6 +66,7 @@ class UploadController extends Controller
      */
     public function edit($id)
     {
+        echo "edit";
         //
     }
 
@@ -76,6 +79,7 @@ class UploadController extends Controller
      */
     public function update(Request $request, $id)
     {
+        echo "update";
         //
     }
 

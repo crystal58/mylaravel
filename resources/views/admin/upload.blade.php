@@ -1,38 +1,5 @@
-<!DOCTYPE HTML>
-<!--
-/*
- * jQuery File Upload Plugin Demo
- * https://github.com/blueimp/jQuery-File-Upload
- *
- * Copyright 2010, Sebastian Tschan
- * https://blueimp.net
- *
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
- */
--->
-<html lang="en">
-<head>
-<!-- Force latest IE rendering engine or ChromeFrame if installed -->
-<!--[if IE]>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<![endif]-->
-<meta charset="utf-8">
-<title>jQuery File Upload Demo</title>
-<meta name="description" content="File Upload widget with multiple file selection, drag&amp;drop support, progress bars, validation and preview images, audio and video for jQuery. Supports cross-domain, chunked and resumable file uploads and client-side image resizing. Works with any server-side platform (PHP, Python, Ruby on Rails, Java, Node.js, Go etc.) that supports standard HTML form file uploads.">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Generic page styles -->
-<link rel="stylesheet" href="{{ asset('/jQueryFileUpload/css/style.css') }}">
-<!-- blueimp Gallery styles -->
-<link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
-<link rel="stylesheet" href="{{ asset('/jQueryFileUpload/css/jquery.fileupload.css')}}">
-<link rel="stylesheet" href="{{ asset('/jQueryFileUpload/css/jquery.fileupload-ui.css')}}">
-<!-- CSS adjustments for browsers with JavaScript disabled -->
-<noscript><link rel="stylesheet" href="{{ asset('/jQueryFileUpload/css/jquery.fileupload-noscript.css')}}"></noscript>
-<noscript><link rel="stylesheet" href="{{ asset('/jQueryFileUpload/css/jquery.fileupload-ui-noscript.css')}}"></noscript>
-</head>
-<body>
+@extends('app')
+@section('content')
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -77,6 +44,7 @@
         <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
         <div class="row fileupload-buttonbar">
             <div class="col-lg-7">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <!-- The fileinput-button span is used to style the file input field as button -->
                 <span class="btn btn-success fileinput-button">
                     <i class="glyphicon glyphicon-plus"></i>
@@ -243,11 +211,50 @@
 <script src="{{ asset('/jQueryFileUpload/js/jquery.fileupload-validate.js')}}"></script>
 <!-- The File Upload user interface plugin -->
 <script src="{{ asset('/jQueryFileUpload/js/jquery.fileupload-ui.js')}}"></script>
-<!-- The main application script -->
-<script src="{{ asset('/jQueryFileUpload/js/main.js')}}"></script>
+
 <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
 <!--[if (gte IE 8)&(lt IE 10)]>
 <script src="{{ asset('/jQueryFileUpload/js/cors/jquery.xdr-transport.js')}}"></script>
 <![endif]-->
-</body>
-</html>
+<script>
+
+    $(function () {
+        'use strict';
+
+        // Initialize the jQuery File Upload widget:
+        $('#fileupload').fileupload({
+            // Uncomment the following to send cross-domain cookies:
+            //xhrFields: {withCredentials: true},
+            url: '/upload'
+        });
+
+        // Enable iframe cross-domain access via redirect option:
+        $('#fileupload').fileupload(
+                'option',
+                'redirect',
+                window.location.href.replace(
+                        /\/[^\/]*$/,
+                        '/cors/result.html?%s'
+                )
+        );
+
+
+            $('#fileupload').addClass('fileupload-processing');
+            $.ajax({
+                // Uncomment the following to send cross-domain cookies:
+                //xhrFields: {withCredentials: true},
+                url: $('#fileupload').fileupload('option', 'url'),
+                dataType: 'json',
+                context: $('#fileupload')[0]
+            }).always(function () {
+                $(this).removeClass('fileupload-processing');
+            }).done(function (result) {
+                $(this).fileupload('option', 'done')
+                        .call(this, $.Event('done'), {result: result});
+            })
+
+
+    });
+
+</script>
+@endsection
